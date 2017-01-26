@@ -1,5 +1,5 @@
 class player(object):
-    """This is the player class really"""
+    """This is the player class"""
     def __init__(self,cash,bet = 0):
         self.__cards = []
         self.__initial_cash = cash
