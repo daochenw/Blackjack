@@ -119,24 +119,29 @@ def play(shoe,player,dealer):
     n = input("How many decks do you want to play with:  ")
     p = input("Input penetration, e.g. for 75% enter 75:  ")
     cash = input("How much cash are you playing with, e.g. for £500 enter 500:  ")
-    shoe = shoe(int(n),int(p))
+    shoe_ = shoe(int(n),int(p))
     player = player(int(cash))
     dealer = dealer()
     print("Shuffling the shoe.")
-    shoe.shuffle()
+    shoe_.shuffle()
     print("Shuffle complete, let's begin.")
-    
     while True:
 
+
         bet_amount = input("How much do you want to bet:  ")
+        if int(bet_amount) > int(player.cash()):
+            print("Cannot place bet!")
+            print("You currently have cash:  ", player.cash())
+            print("Your bet mustn't exceed this.")
+            continue
         player.bet(int(bet_amount))
-        card_1 = deal(shoe,dealer)
+        card_1 = deal(shoe_,dealer)
         print("The first card dealt to the dealer is:  ",card_1)
-        card_2 = deal(shoe,player)
+        card_2 = deal(shoe_,player)
         print("You have been dealt:  ",card_2)
-        card_3 = deal(shoe,dealer)
+        card_3 = deal(shoe_,dealer)
         print("The second card has been dealt to the dealer. ")
-        card_4 = deal(shoe,player)
+        card_4 = deal(shoe_,player)
         print("You have been dealt:  ", card_4)
         if {card_1,card_3} == {10,"A"}:
             print("The dealer has a Blackjack.")
@@ -163,7 +168,7 @@ def play(shoe,player,dealer):
                     if hs == "s":
                        break
                     elif hs == "h":
-                        card = deal(shoe,player)
+                        card = deal(shoe_,player)
                         print("You have been dealt:  ", card)
                         if player.value() > 21:
                             print("This is your current status:  ")
@@ -175,7 +180,7 @@ def play(shoe,player,dealer):
                 if TF:
                     print("The second card dealt to the dealer is:  ",card_3)
                     print("The dealer is now playing, please wait.")
-                    dealer_play(shoe,dealer)
+                    dealer_play(shoe_,dealer)
                     print(dealer)
                     print("The dealer's value is:  ", dealer.value())
                     print("Your value is:  ", player.value())
@@ -206,12 +211,16 @@ def play(shoe,player,dealer):
         if yn == "y":
             player.remove()
             dealer.remove()
-            if shoe.number() < 52*int(n)*(100-int(p))/100:
-                shoe = shoe(n,p)
+            if shoe_.number() < 52*int(n)*(100-int(p))/100:
+                shoe_ = shoe(int(n),int(p))
+                print("Replacing shoe as penetration reached.")
+                print("Shuffling the shoe.")
+                shoe_.shuffle()
+                print("Shuffle complete.")
         else:
-            winnings = player.winnings()
             break
 
     print("Thanks for playing, your total winnings are:  ", player.winnings())
+
 
 
