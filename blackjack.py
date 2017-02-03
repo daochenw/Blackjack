@@ -127,7 +127,6 @@ def play(shoe,player,dealer):
     print("Shuffle complete, let's begin.")
     while True:
 
-
         bet_amount = input("How much do you want to bet:  ")
         if int(bet_amount) > int(player.cash()):
             print("Cannot place bet!")
@@ -206,6 +205,10 @@ def play(shoe,player,dealer):
                         player.tie()
                         
         print("You currently have cash:  ", player.cash())
+        if player.cash() == 0:
+            print("You've run out of cash!")
+            break
+    
         yn = input("Do you want to play another round, y/n:  ")
 
         if yn == "y":
@@ -221,6 +224,9 @@ def play(shoe,player,dealer):
             break
 
     print("Thanks for playing, your total winnings are:  ", player.winnings())
+
+
+
 
 
 
