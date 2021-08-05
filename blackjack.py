@@ -224,9 +224,3 @@ def play(shoe,player,dealer):
             break
 
     print("Thanks for playing, your total winnings are:  ", player.winnings())
-
-
-
-
-
-
